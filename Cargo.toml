@@ -1,0 +1,25 @@
+[package]
+name = "sized_matrix"
+description = "Sized matrices using const generics for better type checking and performance"
+keywords = ["matrix", "vector", "linear-algebra", "const-generics", "sized"]
+categories = ["data-structures", "algorithms", "mathematics", "science", "no-std"]
+documentation = "https://docs.rs/sized_matrix"
+homepage = "https://github.com/LukeMiles49/sized-matrix-rs"
+version = "0.1.0"
+authors = ["Luke Miles <luke.49@live.co.uk>"]
+license = "MIT"
+repository = "https://github.com/LukeMiles49/sized-matrix-rs"
+readme = "README.md"
+edition = "2018"
+
+[dependencies]
+init_trait = { version = "0.2", default-features = false }
+num-traits = { version = "0.2", default-features = false, features = ["i128"] }
+
+[dev-dependencies]
+version-sync = "0.9"
+
+[features]
+default = ["std"]
+std = ["num-traits/std"]
+libm = ["num-traits/libm"]
