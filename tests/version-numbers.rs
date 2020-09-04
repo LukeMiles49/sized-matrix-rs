@@ -4,6 +4,11 @@ fn test_readme_deps() {
 }
 
 #[test]
+fn test_changelog_deps() {
+	version_sync::assert_markdown_deps_updated!("CHANGELOG.md");
+}
+
+#[test]
 fn test_html_root_url() {
 	version_sync::assert_html_root_url_updated!("src/lib.rs");
 }

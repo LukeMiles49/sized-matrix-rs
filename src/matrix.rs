@@ -1,6 +1,6 @@
-use super::{Scalar, Transpose, Vector, MapArray};
+use super::{Scalar, Transpose, Vector};
 
-use init_trait::Init;
+use higher_order_functions::{Init, Map};
 
 use core::ops::{
 	Add, AddAssign,
@@ -157,7 +157,7 @@ impl<T, const M: usize, const N: usize> !Scalar for Matrix<T, M, N> { }
 
 impl<T, const M: usize, const N: usize> Init<T, [usize; 2]> for Matrix<T, M, N> {
 	fn init_with<F: FnMut([usize; 2]) -> T>(_: (), mut elem: F) -> Self {
-		Self::new(<[[T; M]; N]>::init(|[col, row]: [usize; 2]| elem([row, col])))
+		Self::new(<[_; N]>::init(|col| <[_; M]>::init(|row| elem([row, col]))))
 	}
 }
 
@@ -172,6 +172,15 @@ impl<T, const M: usize, const N: usize> Index<[usize; 2]> for Matrix<T, M, N> {
 impl<T, const M: usize, const N: usize> IndexMut<[usize; 2]> for Matrix<T, M, N> {
 	fn index_mut(&mut self, [row, col]: [usize; 2]) -> &mut T {
 		&mut self.contents[col][row]
+	}
+}
+
+impl<T, const M: usize, const N: usize> Map for Matrix<T, M, N> {
+	type TFrom = T;
+	type TOut<TTo> = Matrix<TTo, M, N>;
+	
+	fn map<TTo, F: FnMut(Self::TFrom) -> TTo>(self, mut f: F) -> Self::TOut<TTo> {
+		Matrix::new(self.contents.map(|col| col.map(|x| f(x))))
 	}
 }
 

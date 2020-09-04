@@ -28,9 +28,13 @@
 #![no_std]
 
 #![feature(const_generics)]
+#![feature(generic_associated_types)]
 #![feature(external_doc)]
 #![feature(maybe_uninit_uninit_array)]
 #![feature(negative_impls)]
+#![feature(maybe_uninit_extra)]
+
+#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.0")]
 
 mod traits;
 pub use traits::*;
@@ -40,9 +44,6 @@ pub use matrix::*;
 
 mod vector;
 pub use vector::*;
-
-mod array_helpers;
-use array_helpers::*;
 
 // Include the readme and changelog as hidden documentation so they're tested by cargo test
 #[doc(include = "../README.md")]

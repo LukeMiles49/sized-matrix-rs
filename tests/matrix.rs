@@ -1,5 +1,5 @@
 use sized_matrix::{Matrix, Transpose};
-use init_trait::Init;
+use higher_order_functions::{Init, Map};
 
 use core::hash::{Hash, Hasher};
 use std::collections::hash_map::DefaultHasher;
@@ -50,6 +50,20 @@ fn matrix_from_vectors() {
 	]);
 	
 	assert_eq!(matrix, Matrix::<_, 3, 2>::init(|[row, col]| (row, col)));
+}
+
+#[test]
+fn matrix_map_double() {
+	let matrix = Matrix::rows([[1, 4, 5], [2, 3, 6]]);
+	
+	assert_eq!(matrix.map(|x| x * 2), Matrix::rows([[2, 8, 10], [4, 6, 12]]));
+}
+
+#[test]
+fn matrix_map_cast() {
+	let matrix = Matrix::rows([[1, 4, 5], [2, 3, 6]]);
+	
+	assert_eq!(matrix.map(f64::from), Matrix::rows([[1.0, 4.0, 5.0], [2.0, 3.0, 6.0]]));
 }
 
 #[test]

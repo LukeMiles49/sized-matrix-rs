@@ -1,6 +1,6 @@
 use super::Matrix;
 
-use init_trait::Init;
+use higher_order_functions::Init;
 
 use core::ops::{
 	Index, IndexMut,
