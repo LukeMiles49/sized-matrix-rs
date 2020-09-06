@@ -1,4 +1,4 @@
-use sized_matrix::Vector;
+use sized_matrix::{Vector, Dot};
 use higher_order_functions::Init;
 
 #[test]
@@ -11,8 +11,17 @@ fn init_vector() {
 }
 
 #[test]
-fn matrix_vector() {
+fn vector_vector() {
 	let vector = Vector::vector([0, 1, 2, 3]);
 	
 	assert_eq!(vector, Vector::<_, 4>::init(|x: usize| x));
+}
+
+#[test]
+fn vector_dot() {
+	let a = Vector::vector([0, 1, 1, 3, 5]);
+	
+	let b = Vector::vector([2, 3, 5, 7, 11]);
+	
+	assert_eq!(a.dot(b), 84);
 }

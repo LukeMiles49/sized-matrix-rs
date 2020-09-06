@@ -34,7 +34,7 @@
 #![feature(negative_impls)]
 #![feature(maybe_uninit_extra)]
 
-#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.0")]
+#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.1")]
 
 mod traits;
 pub use traits::*;

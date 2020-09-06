@@ -27,7 +27,7 @@ use num_traits::{
 	PrimInt,
 };
 
-/// An M by N matrix of Ts.
+/// An `M` by `N` matrix of `T`s.
 ///
 /// # Examples
 ///
@@ -211,7 +211,7 @@ impl<T: Copy, const N: usize> One for Matrix<T, N, N> where
 		Self::init(|[row, col]| if row == col { T::one() } else { T::zero() })
 	}
 	
-	// FIXME: Uncomment when One relaxes the PartialEq requirement
+	// FIXME: Uncomment when `One` relaxes the `PartialEq` requirement
 	
 	/*
 	fn is_one(&self) -> bool {
@@ -301,7 +301,7 @@ impl<T, const M: usize, const N: usize> Transpose for Matrix<T, M, N> {
 	}
 }
 
-/// Matrix-Scalar multiplication.
+/// `Matrix`-`Scalar` multiplication.
 impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Mul<TRhs> for Matrix<TLhs, M, N> where
 	TLhs: Mul<TRhs, Output = TOutput>,
 	TRhs: Scalar,
@@ -315,7 +315,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Mul<TRhs> 
 	}
 }
 
-/// Matrix-Scalar multiplication.
+/// `Matrix`-`Scalar` multiplication.
 impl<TLhs: Copy, TRhs: Copy, const M: usize, const N: usize> MulAssign<TRhs> for Matrix<TLhs, M, N> where
 	Self: Mul<TRhs, Output = Matrix<TLhs, M, N>>,
 	TRhs: Scalar,
@@ -325,7 +325,7 @@ impl<TLhs: Copy, TRhs: Copy, const M: usize, const N: usize> MulAssign<TRhs> for
 	}
 }
 
-/// Matrix-Scalar division.
+/// `Matrix`-`Scalar` division.
 impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Div<TRhs> for Matrix<TLhs, M, N> where
 	TLhs: Div<TRhs, Output = TOutput>,
 	TRhs: Scalar,
@@ -339,7 +339,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Div<TRhs> 
 	}
 }
 
-/// Matrix-Scalar division.
+/// `Matrix`-`Scalar` division.
 impl<TLhs: Copy, TRhs: Copy, const M: usize, const N: usize> DivAssign<TRhs> for Matrix<TLhs, M, N> where
 	Self: Div<TRhs, Output = Matrix<TLhs, M, N>>,
 	TRhs: Scalar,
@@ -401,7 +401,7 @@ impl<T: Copy, TOutput, const M: usize, const N: usize> Neg for Matrix<T, M, N> w
 	}
 }
 
-/// Matrix-Matrix multiplication.
+/// `Matrix`-`Matrix` multiplication.
 impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const K: usize, const N: usize> Mul<Matrix<TRhs, K, N>> for Matrix<TLhs, M, K> where
 	TLhs: Mul<TRhs, Output = TOutput> + MulAdd<TRhs, TOutput, Output = TOutput>,
 	TOutput: Zero,
@@ -419,7 +419,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const K: usize, const N: u
 	}
 }
 
-/// Matrix-Matrix multiplication.
+/// `Matrix`-`Matrix` multiplication.
 impl<TLhs: Copy, TRhs: Copy, const M: usize, const N: usize> MulAssign<Matrix<TRhs, N, N>> for Matrix<TLhs, M, N> where
 	Self: Mul<Matrix<TRhs, N, N>, Output = Self>,
 {
@@ -452,14 +452,14 @@ impl<TLhs: Copy, TA: Copy, TB: Copy, const M: usize, const N: usize> MulAddAssig
 	}
 }
 
-/// Matrix-Matrix division.
+/// `Matrix`-`Matrix` division.
 ///
-/// This performs a generalised Gauss-Jordan elimination to calculate self * rhs^-1.
+/// This performs a generalised Gauss-Jordan elimination to calculate `self * rhs^-1`.
 ///
 /// This is slightly more efficient than calculating the inverse then multiplying, as the
 /// Gauss-Jordan method of finding an inverse involves multiplying the identity matrix by the
 /// inverse of the matrix, so you can replace this identity matrix with another matrix to get an
-/// extra multiplication 'for free'. Inversion is then defined as A^-1 = 1 / A.
+/// extra multiplication 'for free'. Inversion is then defined as `A^-1 = 1 / A`.
 impl<TLhs: Copy, TRhs: Copy, const M: usize, const N: usize> Div<Matrix<TRhs, N, N>> for Matrix<TLhs, M, N> where
 	TLhs: MulAdd<TRhs, TLhs, Output = TLhs> + DivAssign<TRhs>,
 	TRhs: Zero + MulAdd<TRhs, TRhs, Output = TRhs> + DivAssign<TRhs> + Neg<Output = TRhs>,
@@ -467,15 +467,15 @@ impl<TLhs: Copy, TRhs: Copy, const M: usize, const N: usize> Div<Matrix<TRhs, N,
 	type Output = Self;
 	
 	fn div(mut self, mut rhs: Matrix<TRhs, N, N>) -> Self::Output {
-		// The Gauss-Jordan method 'multiplies' A|B by A^-1 to give I|A^-1 B
+		// The Gauss-Jordan method 'multiplies' `A|B` by `A^-1` to give `I|A^-1 B`
 		
-		// We want A B^-1, so we can apply transpositions to get this
+		// We want `A B^-1`, so we can apply transpositions to get this
 		
-		// (A^T)^-1 = (A^-1)^T
-		// (A B)^T = B^T A^T
-		// Therefore A B^-1 = ((B^-1)^T A^T)^T = ((B^T)^-1 A^T)^T
-		// Applying Gauss-Jordan elimination to A^T|B^T gives (B^T)^-1 A^T
-		// We can then transpose this to give ((B^T)^-1 A^T)^T = A B^-1
+		// `(A^T)^-1 = (A^-1)^T`
+		// `(A B)^T = B^T A^T`
+		// Therefore `A B^-1 = ((B^-1)^T A^T)^T = ((B^T)^-1 A^T)^T`
+		// Applying Gauss-Jordan elimination to `A^T|B^T` gives `(B^T)^-1 A^T`
+		// We can then transpose this to give `((B^T)^-1 A^T)^T = A B^-1`
 		
 		// To improve this further we can also remove the need for calculating any of the transpositions
 		// by switching the ordering of the indexing, which ends up being slightly more efficient anyway
@@ -518,7 +518,7 @@ impl<TLhs: Copy, TRhs: Copy, const M: usize, const N: usize> Div<Matrix<TRhs, N,
 	}
 }
 
-/// Matrix-Matrix division.
+/// `Matrix`-`Matrix` division.
 ///
 /// See [Div<Matrix<TRhs, N, N>>](struct.Matrix.html#impl-Div%3CMatrix%3CTRhs%2C%20N%2C%20N%3E%3E)
 impl<T: Copy, const M: usize, const N: usize> DivAssign<Matrix<T, N, N>> for Matrix<T, M, N> where
@@ -539,7 +539,7 @@ impl<T: Copy, const N: usize> Inv for Matrix<T, N, N> where
 	}
 }
 
-// FIXME: Remove the Inv bound for Unsigned once Signed and Unsigned are mutually exclusive
+// FIXME: Remove the `Inv` bound for `Unsigned` once `Signed` and `Unsigned` are mutually exclusive
 impl<T: Copy, TRhs, const N: usize> Pow<TRhs> for Matrix<T, N, N> where
 	Self: Inv<Output = Self> + One + MulAssign<Self>,
 	TRhs: PrimInt,

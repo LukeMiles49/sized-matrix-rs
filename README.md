@@ -48,5 +48,5 @@ assert_eq!(e, Matrix::vector([
 To use this, add it as a dependency to your Cargo.toml:
 ```toml
 [dependencies]
-sized_matrix = "0.2.0"
+sized_matrix = "0.2.1"
 ```

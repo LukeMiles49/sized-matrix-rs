@@ -10,6 +10,7 @@ impl<T: Num> Scalar for T { }
 pub trait Transpose {
 	type Output;
 	
+	/// Returns the transpose of `self`.
 	fn transpose(self) -> Self::Output;
 }
 
@@ -29,4 +30,12 @@ impl<T, const M: usize, const N: usize> Transpose for [[T; M]; N] {
 		
 		unsafe { transmute_copy(&contents) }
 	}
+}
+
+/// Binary operator for the dot product operation.
+pub trait Dot<TRhs = Self> {
+	type Output;
+	
+	/// Returns `self · rhs`.
+	fn dot(self, rhs: TRhs) -> Self::Output;
 }
