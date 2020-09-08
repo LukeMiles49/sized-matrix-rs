@@ -1,6 +1,6 @@
 use super::{Scalar, Transpose, Vector};
 
-use higher_order_functions::{Init, Map};
+use higher_order_functions::{Init, Map, Zip, Section};
 
 use core::ops::{
 	Add, AddAssign,
@@ -184,6 +184,22 @@ impl<T, const M: usize, const N: usize> Map for Matrix<T, M, N> {
 	}
 }
 
+impl<TLhs, const M: usize, const N: usize> Zip for Matrix<TLhs, M, N> {
+	type TLhs = TLhs;
+	type TSelf<T> = Matrix<T, M, N>;
+	
+	fn zip<TRhs, TTo, F: FnMut(Self::TLhs, TRhs) -> TTo>(self, rhs: Self::TSelf<TRhs>, mut f: F) -> Self::TSelf<TTo> {
+		Matrix::new(self.contents.zip(rhs.contents, |a_col, b_col| a_col.zip(b_col, |a, b| f(a, b))))
+	}
+}
+
+impl<T: Copy, const M: usize, const N: usize, const M_OUT: usize, const N_OUT: usize> Section<[usize; 2], Matrix<T, M_OUT, N_OUT>> for Matrix<T, M, N> {
+	fn section(&self, [row_offset, col_offset]: [usize; 2]) -> Matrix<T, M_OUT, N_OUT> {
+		assert!(row_offset <= M - M_OUT && col_offset <= N - N_OUT, "Out of bounds");
+		Matrix::init(|[row, col]: [usize; 2]| self[[row + row_offset, col + col_offset]])
+	}
+}
+
 
 impl<T: Copy, const M: usize, const N: usize> Zero for Matrix<T, M, N> where
 	T: Zero,
@@ -309,9 +325,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Mul<TRhs> 
 	type Output = Matrix<TOutput, M, N>;
 	
 	fn mul(self, rhs: TRhs) -> Self::Output {
-		Self::Output::init(|[row, col]| {
-			self[[row, col]] * rhs
-		})
+		self.map(|x| x * rhs)
 	}
 }
 
@@ -333,9 +347,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Div<TRhs> 
 	type Output = Matrix<TOutput, M, N>;
 	
 	fn div(self, rhs: TRhs) -> Self::Output {
-		Self::Output::init(|[row, col]| {
-			self[[row, col]] / rhs
-		})
+		self.map(|x| x / rhs)
 	}
 }
 
@@ -355,9 +367,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Add<Matrix
 	type Output = Matrix<TOutput, M, N>;
 	
 	fn add(self, rhs: Matrix<TRhs, M, N>) -> Self::Output {
-		Self::Output::init(|[row, col]| {
-			self[[row, col]] + rhs[[row, col]]
-		})
+		self.zip(rhs, |a, b| a + b)
 	}
 }
 
@@ -375,9 +385,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Sub<Matrix
 	type Output = Matrix<TOutput, M, N>;
 	
 	fn sub(self, rhs: Matrix<TRhs, M, N>) -> Self::Output {
-		Self::Output::init(|[row, col]| {
-			self[[row, col]] - rhs[[row, col]]
-		})
+		self.zip(rhs, |a, b| a - b)
 	}
 }
 
@@ -395,9 +403,7 @@ impl<T: Copy, TOutput, const M: usize, const N: usize> Neg for Matrix<T, M, N> w
 	type Output = Matrix<TOutput, M, N>;
 	
 	fn neg(self) -> Self::Output {
-		Self::Output::init(|[row, col]| {
-			-self[[row, col]]
-		})
+		self.map(|x| -x)
 	}
 }
 

@@ -1,7 +1,7 @@
 //! Sized matrices using const generics for better type checking and performance.
 //!
 //! ```rust
-//! use sized_matrix::Matrix;
+//! use sized_matrix::{Matrix, Vector};
 //!
 //! let a: Matrix<i32, 3, 4> = Matrix::rows([
 //!     [ 1,  2,  3,  4],
@@ -23,6 +23,22 @@
 //!     [ 91, 156],
 //!     [139, 240],
 //! ]));
+//!
+//! let d: Vector<i32, 2> = Matrix::vector([-1, 1]);
+//!
+//! let e: Vector<i32, 3> = c * d;
+//!
+//! assert_eq!(e, Matrix::vector([
+//!      29,
+//!      65,
+//!     101,
+//! ]));
+//! ```
+//!
+//! To use this, add it as a dependency to your Cargo.toml:
+//! ```toml
+//! [dependencies]
+//! sized_matrix = "^0.2.2"
 //! ```
 
 #![no_std]
@@ -34,7 +50,7 @@
 #![feature(negative_impls)]
 #![feature(maybe_uninit_extra)]
 
-#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.1")]
+#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.2")]
 
 mod traits;
 pub use traits::*;

@@ -2,6 +2,11 @@
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.2](https://crates.io/crates/sized_matrix/0.2.2) - 2020-09-08
+
+### Added:
+* Implemented `Zip` and `Section` from [higher_order_functions](https://crates.io/crates/higher_order_functions) for `Vector` and `Matrix`
+
 ## [v0.2.1](https://crates.io/crates/sized_matrix/0.2.1) - 2020-09-06
 
 ### Added:

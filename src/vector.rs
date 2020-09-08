@@ -1,6 +1,6 @@
 use super::{Matrix, Dot};
 
-use higher_order_functions::Init;
+use higher_order_functions::{Init, Section};
 
 use core::ops::{
 	Mul,
@@ -48,6 +48,12 @@ impl<T, const M: usize> Index<usize> for Vector<T, M> {
 impl<T, const M: usize> IndexMut<usize> for Vector<T, M> {
 	fn index_mut(&mut self, index: usize) -> &mut T {
 		&mut self[[0, index]]
+	}
+}
+
+impl<T: Copy, const M: usize, const M_OUT: usize> Section<usize, Vector<T, M_OUT>> for Vector<T, M> {
+	fn section(&self, offset: usize) -> Vector<T, M_OUT> {
+		self.section([offset, 0])
 	}
 }
 

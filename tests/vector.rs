@@ -1,5 +1,5 @@
 use sized_matrix::{Vector, Dot};
-use higher_order_functions::Init;
+use higher_order_functions::{Init, Section};
 
 #[test]
 fn init_vector() {
@@ -15,6 +15,13 @@ fn vector_vector() {
 	let vector = Vector::vector([0, 1, 2, 3]);
 	
 	assert_eq!(vector, Vector::<_, 4>::init(|x: usize| x));
+}
+
+#[test]
+fn vector_section() {
+	let vector = Vector::vector([0, 1, 2, 3]);
+	
+	assert_eq!(vector.section(1), Vector::vector([1, 2]));
 }
 
 #[test]
