@@ -367,6 +367,15 @@ fn matrix_div() {
 }
 
 #[test]
+fn matrix_div_left() {
+	let a = Matrix::cols([[3., 5.], [8., 13.], [21., 34.]]);
+	
+	let b = Matrix::rows([[2., 3.], [3., 5.]]);
+	
+	assert_eq!(a.div_left(b), Matrix::cols([[0., 1.], [1., 2.], [3., 5.]]));
+}
+
+#[test]
 fn matrix_div_assign() {
 	let mut a = Matrix::rows([[3., 5.], [8., 13.], [21., 34.]]);
 	

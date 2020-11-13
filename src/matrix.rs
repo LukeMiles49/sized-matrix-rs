@@ -151,6 +151,17 @@ impl<T, const M: usize, const N: usize> Matrix<T, M, N> {
 	pub fn swap_col(&mut self, i: usize, j: usize) {
 		self.contents.swap(i, j);
 	}
+	
+	/// `Matrix`-`Matrix` left-division.
+	///
+	/// This performs a generalised Gauss-Jordan elimination to calculate `rhs^-1 * self`.
+	///
+	/// See [`Div<Matrix<TRhs, N, N>>`](#impl-Div<Matrix<TRhs%2C%20N%2C%20N>>).
+	pub fn div_left<TRhs>(self, rhs: Matrix<TRhs, M, M>) -> Self where
+		Matrix<T, N, M>: Div<Matrix<TRhs, M, M>, Output = Matrix<T, N, M>>
+	{
+		(self.transpose() / rhs.transpose()).transpose()
+	}
 }
 
 impl<T, const M: usize, const N: usize> !Scalar for Matrix<T, M, N> { }
@@ -458,7 +469,7 @@ impl<TLhs: Copy, TA: Copy, TB: Copy, const M: usize, const N: usize> MulAddAssig
 	}
 }
 
-/// `Matrix`-`Matrix` division.
+/// `Matrix`-`Matrix` right-division.
 ///
 /// This performs a generalised Gauss-Jordan elimination to calculate `self * rhs^-1`.
 ///

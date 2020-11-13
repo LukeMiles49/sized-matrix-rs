@@ -2,6 +2,11 @@
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.3](https://crates.io/crates/sized_matrix/0.2.3) - 2020-11-12
+
+### Added:
+* Added left-division for `Matrix` (`rhs^-1 * self` instead of `self * rhs^-1`)
+
 ## [v0.2.2](https://crates.io/crates/sized_matrix/0.2.2) - 2020-09-08
 
 ### Added:
