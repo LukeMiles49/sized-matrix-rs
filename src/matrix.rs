@@ -294,13 +294,13 @@ impl<T, const M: usize, const N: usize> Debug for Matrix<T, M, N> where
 	T: Debug,
 {
 	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-		struct Cell<'a, T, const M: usize, const N: usize> { mat: &'a Matrix<T, M, N>, row: usize, col: usize };
+		struct Cell<'a, T, const M: usize, const N: usize> { mat: &'a Matrix<T, M, N>, row: usize, col: usize }
 		impl<T: Debug, const M: usize, const N: usize> Debug for Cell<'_, T, M, N> {
 			fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
 				self.mat[[self.row, self.col]].fmt(f)
 			}
 		}
-		struct Row<'a, T, const M: usize, const N: usize> { mat: &'a Matrix<T, M, N>, row: usize };
+		struct Row<'a, T, const M: usize, const N: usize> { mat: &'a Matrix<T, M, N>, row: usize }
 		impl<T: Debug, const M: usize, const N: usize> Debug for Row<'_, T, M, N> {
 			fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
 				<[Cell<T, M, N>; N]>::init(|col| Cell { mat: self.mat, row: self.row, col })[..].fmt(f)

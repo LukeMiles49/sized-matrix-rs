@@ -2,6 +2,11 @@
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.4](https://crates.io/crates/sized_matrix/0.2.4) - 2021-04-04
+
+### Fixed:
+* Unstable function name changed by <https://github.com/rust-lang/rust/issues/63567>
+
 ## [v0.2.3](https://crates.io/crates/sized_matrix/0.2.3) - 2020-11-12
 
 ### Added:

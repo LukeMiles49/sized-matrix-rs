@@ -24,7 +24,7 @@ impl<T, const M: usize, const N: usize> Transpose for [[T; M]; N] {
 		
 		for i in 0..M {
 			for j in 0..N {
-				contents[i][j].write(unsafe { consumed[j][i].read() });
+				contents[i][j].write(unsafe { consumed[j][i].assume_init_read() });
 			}
 		}
 		
