@@ -47,7 +47,7 @@ impl<T, const M: usize> Index<usize> for Vector<T, M> {
 
 impl<T, const M: usize> IndexMut<usize> for Vector<T, M> {
 	fn index_mut(&mut self, index: usize) -> &mut T {
-		&mut self[[0, index]]
+		&mut self[[index, 0]]
 	}
 }
 

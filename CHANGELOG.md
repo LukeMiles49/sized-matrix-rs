@@ -2,6 +2,11 @@
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.5](https://crates.io/crates/sized_matrix/0.2.5) - 2021-04-05
+
+### Fixed:
+* Typo in `Vector` `IndexMut` causing index out of bounds error
+
 ## [v0.2.4](https://crates.io/crates/sized_matrix/0.2.4) - 2021-04-04
 
 ### Fixed:

@@ -38,7 +38,7 @@
 //! To use this, add it as a dependency to your Cargo.toml:
 //! ```toml
 //! [dependencies]
-//! sized_matrix = "^0.2.4"
+//! sized_matrix = "^0.2.5"
 //! ```
 
 #![no_std]
@@ -50,7 +50,7 @@
 #![feature(negative_impls)]
 #![feature(maybe_uninit_extra)]
 
-#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.4")]
+#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.5")]
 
 mod traits;
 pub use traits::*;

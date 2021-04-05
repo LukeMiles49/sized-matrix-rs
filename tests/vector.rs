@@ -2,6 +2,26 @@ use sized_matrix::{Vector, Dot};
 use higher_order_functions::{Init, Section};
 
 #[test]
+fn vector_index() {
+	let vector = Vector::vector([5, 6, 7, 8]);
+	
+	for i in 0..4 {
+		assert_eq!(vector[i], i + 5);
+	}
+}
+
+#[test]
+fn vector_index_mut() {
+	let mut vector = Vector::vector([0, 0, 0, 0]);
+	
+	for i in 0..4 {
+		vector[i] = i;
+	}
+	
+	assert_eq!(vector, Vector::<_, 4>::init(|x: usize| x));
+}
+
+#[test]
 fn init_vector() {
 	let vector = Vector::<_, 4>::init(|x: usize| x);
 	
