@@ -38,19 +38,16 @@
 //! To use this, add it as a dependency to your Cargo.toml:
 //! ```toml
 //! [dependencies]
-//! sized_matrix = "^0.2.5"
+//! sized_matrix = "^0.3.0"
 //! ```
 
 #![no_std]
 
-#![feature(const_generics)]
 #![feature(generic_associated_types)]
-#![feature(external_doc)]
 #![feature(maybe_uninit_uninit_array)]
 #![feature(negative_impls)]
-#![feature(maybe_uninit_extra)]
 
-#![doc(html_root_url = "https://docs.rs/sized_matrix/0.2.5")]
+#![doc(html_root_url = "https://docs.rs/sized_matrix/0.3.0")]
 
 mod traits;
 pub use traits::*;
@@ -62,6 +59,6 @@ mod vector;
 pub use vector::*;
 
 // Include the readme and changelog as hidden documentation so they're tested by cargo test
-#[doc(include = "../README.md")]
-#[doc(include = "../CHANGELOG.md")]
+#[doc = include_str!("../README.md")]
+#[doc = include_str!("../CHANGELOG.md")]
 type _Doctest = ();

@@ -136,7 +136,7 @@ fn empty_matrix_zip() {
 	let a: Matrix<(), 0, 0> = Matrix::rows([]);
 	let b: Matrix<(), 0, 0> = Matrix::rows([]);
 	
-	let mat = a.zip(b, |_: (), _: ()| panic!("Shouldn't call zip function"));
+	let mat = a.zip_with(b, |_: (), _: ()| panic!("Shouldn't call zip function"));
 	
 	assert_eq!(mat, Matrix::rows([]));
 }
@@ -147,7 +147,7 @@ fn singleton_matrix_zip() {
 	let b = Matrix::rows([[456]]);
 	let mut called = false;
 	
-	let arr = a.zip(b, |a, b| {
+	let arr = a.zip_with(b, |a, b| {
 		assert_eq!(a, 123);
 		assert_eq!(b, 456);
 		if called { panic!("Should only call zip function once"); }
@@ -164,7 +164,7 @@ fn matrix_zip() {
 	let a = Matrix::<_, 3, 5>::init(|[row, col]| (row, col, "a"));
 	let b = Matrix::<_, 3, 5>::init(|[row, col]| (row, col, "b"));
 	
-	let arr = a.zip(b, |ax, bx| (ax, bx));
+	let arr = a.zip_with(b, |ax, bx| (ax, bx));
 	
 	assert_eq!(arr, Matrix::<_, 3, 5>::init(|[row, col]| ((row, col, "a"), (row, col, "b"))));
 }

@@ -5,15 +5,15 @@ keywords = ["matrix", "vector", "linear-algebra", "const-generics", "sized"]
 categories = ["data-structures", "algorithms", "mathematics", "science", "no-std"]
 documentation = "https://docs.rs/sized_matrix"
 homepage = "https://github.com/LukeMiles49/sized-matrix-rs"
-version = "0.2.5"
+version = "0.3.0"
 authors = ["Luke Miles <luke.49@live.co.uk>"]
 license = "MIT"
 repository = "https://github.com/LukeMiles49/sized-matrix-rs"
 readme = "README.md"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
-higher_order_functions = { version = "^0.1.2", default-features = false }
+higher_order_functions = { version = "^0.2.0", default-features = false }
 num-traits = { version = "0.2", default-features = false, features = ["i128"] }
 
 [dev-dependencies]

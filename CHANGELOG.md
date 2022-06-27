@@ -2,6 +2,12 @@
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.3.0](https://crates.io/crates/sized_matrix/0.3.0) - 2022-06-27
+
+### Updated:
+* Updated to [higher_order_functions](https://crates.io/crates/higher_order_functions) v0.2.0
+* Removed unnecessary unstable features
+
 ## [v0.2.5](https://crates.io/crates/sized_matrix/0.2.5) - 2021-04-05
 
 ### Fixed:

@@ -119,7 +119,7 @@ impl<T, const M: usize, const N: usize> Matrix<T, M, N> {
 	///
 	/// # Examples
 	///
-	#[doc(include = "../doc/transform.md")]
+	#[doc = include_str!("../doc/transform.md")]
 	pub fn from_vectors(vectors: [Vector<T, M>; N]) -> Self {
 		Self {
 			contents: vectors.map(|v| {
@@ -133,7 +133,7 @@ impl<T, const M: usize, const N: usize> Matrix<T, M, N> {
 	///
 	/// # Examples
 	///
-	#[doc(include = "../doc/transform.md")]
+	#[doc = include_str!("../doc/transform.md")]
 	pub fn to_vectors(self) -> [Vector<T, M>; N] {
 		self.contents.map(|v| {
 			Matrix::vector(v)
@@ -199,8 +199,8 @@ impl<TLhs, const M: usize, const N: usize> Zip for Matrix<TLhs, M, N> {
 	type TLhs = TLhs;
 	type TSelf<T> = Matrix<T, M, N>;
 	
-	fn zip<TRhs, TTo, F: FnMut(Self::TLhs, TRhs) -> TTo>(self, rhs: Self::TSelf<TRhs>, mut f: F) -> Self::TSelf<TTo> {
-		Matrix::new(self.contents.zip(rhs.contents, |a_col, b_col| a_col.zip(b_col, |a, b| f(a, b))))
+	fn zip_with<TRhs, TTo, F: FnMut(Self::TLhs, TRhs) -> TTo>(self, rhs: Self::TSelf<TRhs>, mut f: F) -> Self::TSelf<TTo> {
+		Matrix::new(self.contents.zip_with(rhs.contents, |a_col, b_col| a_col.zip_with(b_col, |a, b| f(a, b))))
 	}
 }
 
@@ -378,7 +378,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Add<Matrix
 	type Output = Matrix<TOutput, M, N>;
 	
 	fn add(self, rhs: Matrix<TRhs, M, N>) -> Self::Output {
-		self.zip(rhs, |a, b| a + b)
+		self.zip_with(rhs, |a, b| a + b)
 	}
 }
 
@@ -396,7 +396,7 @@ impl<TLhs: Copy, TRhs: Copy, TOutput, const M: usize, const N: usize> Sub<Matrix
 	type Output = Matrix<TOutput, M, N>;
 	
 	fn sub(self, rhs: Matrix<TRhs, M, N>) -> Self::Output {
-		self.zip(rhs, |a, b| a - b)
+		self.zip_with(rhs, |a, b| a - b)
 	}
 }
 
